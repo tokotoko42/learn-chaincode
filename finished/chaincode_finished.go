@@ -52,14 +52,14 @@ func (t *SimpleChaincode) init_user(stub shim.ChaincodeStubInterface, args []str
 }
 
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-    fmt.PrintIn("invoke is running" + function)
+    fmt.Println("invoke is running" + function)
 
     if function == "init" {
         return t.Init(stub, "Init", args)
     } else if function == "add" {
         return t.init_user(stub, args)
     } else if function == "deposit" {
-        point := strconv.Atoi(args[1])
+        point, _ := strconv.Atoi(args[1])
         VMPointAsByte, err := stub.GetState(args[0])
         if err != nil {
             return nil, err
