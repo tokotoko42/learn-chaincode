@@ -38,7 +38,7 @@ func (t *SimpleChaincode) init_user(stub shim.ChaincodeStubInterface, args []str
     id := args[0]
     user_id := strings.ToLower(args[1])
     corporate_name := strings.ToLower(args[2])
-    point := strings.ToLower(args[3])
+    point, _ := strconv.Atoi(args[3])
 
     str := `{"user_id": "` + user_id + `","corporate_name": "` + corporate_name + `","point": "` + point + `"}`
 
