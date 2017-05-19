@@ -67,7 +67,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
         res := VMPoint{}
         json.Unmarshal(VMPointAsByte, &res)
-        res.Point = res.Point + point + 300
+        res.Point = point + res.Point
 
         jsonAsBytes, _ := json.Marshal(res)        
         stub.PutState(args[0], jsonAsBytes)
