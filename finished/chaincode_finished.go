@@ -67,7 +67,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
         res := VMPoint{}
         json.Unmarshal(VMPointAsByte, &res)
-        res.Point = point + res.Point + 0
+        res.Point = res.Point + point
 
         jsonAsBytes, _ := json.Marshal(res)        
         stub.PutState(args[0], jsonAsBytes)
@@ -75,6 +75,29 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
         return nil, nil
     
     } else if function == "transfer" {
+        VMPointAsByte_dest, err := stub.GetState(args[0])
+        if err != nil {
+            return nil, err
+        }
+        VMPointAsByte_src, err := stub.GetState(args[1])
+        if err != nil {
+            return nil, err
+        }
+
+        res_dest := VMPoint{}
+        json.Unmarshal(VMPointAsByte_dest, &res_dest)
+        res_src := VMPoint{}
+        json.Unmarshal(VMPointAsByte_src, &res_src)
+
+        point_diff, _ := strconv.Atoi(args[2])
+
+        res_dest.Point = res_dest.Point - point_diff
+        res_src.Point = res_src.Point + point_diff
+
+        jsonAsBytes_dest, _ := json.Marshal(res_dest)
+        jsonAsBytes_src, _ := json.Marshal(res_src)
+
+        return nil, nil
 
     }
     fmt.Println("invoke did not find func: " + function)
