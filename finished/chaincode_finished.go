@@ -36,11 +36,11 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, functio string,
 func (t *SimpleChaincode) init_user(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
     var err error
     id := args[0]
-    user_id := strings.ToLower(args[1])
+    user_id, _ := strconv.Atoi(args[1])
     corporate_name := strings.ToLower(args[2])
     point, _ := strconv.Atoi(args[3])
 
-    str := `{"user_id": "` + user_id + `","corporate_name": "` + corporate_name + `","point": ` + strconv.Itoa(point) + `}`
+    str := `{"user_id": ` + strconv.Itoa(user_id) + `,"corporate_name": "` + corporate_name + `","point": ` + strconv.Itoa(point) + `}`
 
     fmt.Println(str)
 
