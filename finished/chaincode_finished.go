@@ -97,6 +97,9 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
         jsonAsBytes_dest, _ := json.Marshal(res_dest)
         jsonAsBytes_src, _ := json.Marshal(res_src)
 
+        stub.PutState(args[0], jsonAsBytes_dest)
+        stub.PutState(args[1], jsonAsBytes_src)
+
         return nil, nil
 
     }
